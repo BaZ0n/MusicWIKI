@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MusicWIKI" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimaryDark">@color/purple</item>
+    </style>
+
+    <style name="Theme.MusicWIKI" parent="Base.Theme.MusicWIKI" />
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/activebut</item>
+    </style>
+
+</resources>

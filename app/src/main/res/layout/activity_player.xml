@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlayerActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:src="@drawable/arrow_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/rubik_regular"
+                android:text="Сейчас играет"
+                android:textColor="@color/textGray"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/nowPlayingTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/rubik_medium"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="348dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
+        android:layout_marginTop="40dp"
+        android:isScrollContainer="true">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/trackImagePlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:shapeAppearance="@style/roundedSquare"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/songNameTVPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/card"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="24sp"
+        />
+
+    <TextView
+        android:id="@+id/artistNamePlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/songNameTVPlay"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="0dp"
+        android:textColor="@color/textGray"
+        android:textSize="18sp"
+        android:fontFamily="@font/rubik_regular"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/seekBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/artistNamePlay"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <SeekBar
+            android:id="@+id/seekBarPlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:id="@+id/nowTVPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginVertical="20dp"
+            android:textColor="@color/textGray"/>
+
+        <TextView
+            android:id="@+id/durationTVPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6:66"
+            android:layout_marginRight="20dp"
+            android:layout_marginVertical="20dp"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/textGray"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/seekBarLayout"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/repeatBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/singleicon"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"/>
+
+        <ImageButton
+            android:id="@+id/previousBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/previousicon"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"/>
+
+        <ImageButton
+            android:id="@+id/playPauseBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/playicon"
+            android:background="@null"
+            android:layout_marginLeft="20dp"
+            />
+        <ImageButton
+            android:id="@+id/nextBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nexticon"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"/>
+
+        <ImageButton
+            android:id="@+id/textBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/texticon"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

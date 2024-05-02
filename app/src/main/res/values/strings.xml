@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MusicWIKI</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile">Профиль</string>
+    <string name="favorite">Избранное</string>
+    <string name="catalog">Главное</string>
+    <string name="genre">Жанр</string>
+    <string name="artist">Исполнитель</string>
+    <string name="albumlbl">Альбом</string>
+    <string name="tracklbl">Трек</string>
+    <string name="more"><![CDATA[больше>]]></string>
+    <string name="catalogText">Каталог</string>
+    <string name="songText">Текст песни</string>
+</resources>
