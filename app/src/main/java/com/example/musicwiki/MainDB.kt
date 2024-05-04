@@ -5,9 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database (entities = [trackTB::class], version = 2)
+@Database (entities = [trackTB::class, artistTB::class], version = 3)
 abstract class MainDB : RoomDatabase() {
-
     abstract fun getDao(): Dao
     companion object {
         fun getDB(context: Context): MainDB{
@@ -15,7 +14,9 @@ abstract class MainDB : RoomDatabase() {
                 context.applicationContext,
                 MainDB::class.java,
                 "music.db"
-            ).build()
+            )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
 }

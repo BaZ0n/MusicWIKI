@@ -488,9 +488,23 @@ class SplashActivity : AppCompatActivity() {
             false
         )
 
+        val imageResourceNameNautilus = sharedPref.getString("image_resource_name", "nautiluspompilius")
+        val imageResourceIdNautilus = getResources().getIdentifier(imageResourceNameNautilus, "drawable", packageName)
+        val artistNautlilus = artistTB(null,
+            "Nautilus Pompilius",
+            "Nautilus Pompilius («Наути́лус Помпи́лиус») — советская и российская рок-группа, одна из наиболее известных во второй половине 1980-х и в середине 1990-х годов. Основана в Свердловске в 1982 году студентами Свердловского архитектурного института Вячеславом Бутусовым и Дмитрием Умецким. Дебютный альбом «Переезд» был записан в 1983 году.\n" +
+                    "\n" +
+                    "Состав коллектива неоднократно менялся. Изменениям подвергался также и музыкальный стиль группы. Так, в начальном периоде «Наутилус» играл хард-рок, а во время популярности коллектива в середине 1980-х годов основным жанром являлась новая волна[1]; также творчество группы пересекается со многими направлениями рок-музыки — альтернативный рок, постпанк, готик-рок, арт-рок, симфо-рок[2][3], глэм-рок[4], инди-рок, фолк-рок[5].\n" +
+                    "\n" +
+                    "К наиболее известным песням данной группы относятся такие композиции, как «Скованные одной цепью», «Титаник», «Взгляд с экрана», «Прогулки по воде», «Крылья», «Я хочу быть с тобой» и «Последнее письмо»[6].\n" +
+                    "\n" +
+                    "5 июня 1997 года после концерта в ГЦКЗ «Россия», получившего название «Последнее плавание», и прощального гастрольного тура по стране группа официально прекратила своё существование. Последними альбомами коллектива стали «Яблокитай» и «Атлантида».",
+            imageResourceIdNautilus
+            )
+
         Thread{
- //           db.getDao().deleteAll()
-            val count = db.getDao().getRowCount()
+            //db.getDao().deleteAll()
+            var count = db.getDao().getRowCount()
             if (count == 0) {
                 db.getDao().insertTrack(trackThirst)
                 db.getDao().insertTrack(trackShackled)
@@ -501,6 +515,10 @@ class SplashActivity : AppCompatActivity() {
                 db.getDao().insertTrack(trackShining)
                 db.getDao().insertTrack(trackAutumn)
                 db.getDao().insertTrack(trackPie)
+            }
+            count = db.getDao().getRowCountArtist()
+            if (count == 0) {
+                db.getDao().insertArtist(artistNautlilus)
             }
         }.start()
     }

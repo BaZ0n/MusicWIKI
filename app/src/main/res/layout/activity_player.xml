@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/rubik_regular"
-                android:text="Сейчас играет"
+                android:text="Играет"
                 android:textColor="@color/textGray"
                 android:textSize="18sp" />
 

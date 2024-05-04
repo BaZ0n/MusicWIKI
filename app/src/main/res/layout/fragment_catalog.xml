@@ -10,6 +10,16 @@
     android:scrollbars="vertical"
     tools:context=".catalog_fragment">
 
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginRight="25dp">
+
+
+    </HorizontalScrollView>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,6 +54,52 @@
                     android:src="@drawable/searchimg" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Исполнитель"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginLeft="15dp"/>
+
+                <LinearLayout
+                    android:id="@+id/artistCont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="200dp"
+                    android:layout_marginRight="15dp">
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_marginRight="50dp"-->
+<!--                        android:layout_marginTop="50dp"-->
+<!--                        android:layout_marginLeft="10dp">-->
+<!--                        <com.google.android.material.imageview.ShapeableImageView-->
+<!--                            android:layout_width="85dp"-->
+<!--                            android:layout_height="85dp"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            app:shapeAppearanceOverlay="@style/roundedSquare"-->
+<!--                            app:srcCompat="@drawable/kino" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="85dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:fontFamily="@font/rubik_medium"-->
+<!--                            android:gravity="center"-->
+<!--                            android:singleLine="false"-->
+<!--                            android:text="Кино"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="11sp" />-->
+<!--                    </LinearLayout>-->
+                </LinearLayout>
+
+                <TextView
                     android:id="@+id/trackId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -51,15 +107,15 @@
                     android:text="@string/catalogText"
                     android:textColor="@color/white"
                     android:textSize="30sp"
-                    android:layout_marginTop="150dp"
+                    android:layout_marginTop="315dp"
                     android:layout_marginLeft="25dp"/>
 
                 <LinearLayout
-                    android:id="@+id/parentLayout"
+                    android:id="@+id/trackCont"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
-                    android:layout_marginTop="190dp"
+                    android:layout_marginTop="360dp"
                     android:layout_marginRight="25dp"
                     android:orientation="vertical">
 
