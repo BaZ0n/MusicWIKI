@@ -488,6 +488,81 @@ class SplashActivity : AppCompatActivity() {
             false
         )
 
+        val imageResourceNameTraitor = sharedPref.getString("image_resource_name", "auktyonutraitor")
+        val imageResourceIdTraitor = getResources().getIdentifier(imageResourceNameTraitor, "drawable", packageName)
+        val audioResourceNameFragments = sharedPref.getString("audio_resource_name", "auktyonfragments")
+        val audioResourceFragments = getResources().getIdentifier(audioResourceNameFragments, "raw", packageName)
+        val trackFragments = trackTB(null,
+            "Осколки",
+            "АукцЫон",
+            "Как я стал предателем",
+            "3:47",
+            "Сон, приснилось мне\n" +
+                    "Что я воюю в чужой стране\n" +
+                    "Враг, неравный бой\n" +
+                    "Я ранен в голову\n" +
+                    "Я герой\n" +
+                    "Но, вот, чувствую я\n" +
+                    "Это конец\n" +
+                    "Но, вот, я ухожу\n" +
+                    "Осколки девичьих сердец\n" +
+                    "Хрустят у меня под ногами\n\n" +
+                    "Взрыв, и все в огне\n" +
+                    "Я в красной шапке, я на коне\n" +
+                    "Сон, во сне борьба\n" +
+                    "Судьба народа - моя судьба!\n" +
+                    "Но, вот, чувствую я\n" +
+                    "Это конец\n" +
+                    "Но, вот, я ухожу\n" +
+                    "Осколки девичьих сердец\n" +
+                    "Хрустят у меня под ногами\n\n" +
+                    "Но, вот, чувствую я\n" +
+                    "Это конец\n" +
+                    "Но, вот, я ухожу\n" +
+                    "Осколки девичьих сердец\n" +
+                    "Хрустят у меня под ногами",
+            imageResourceIdTraitor,
+            audioResourceFragments,
+            false
+        )
+
+        val audioResourceNameNapman = sharedPref.getString("audio_resource_name", "auktyonnapman")
+        val audioResourceNapman = getResources().getIdentifier(audioResourceNameNapman, "raw", packageName)
+        val trackNapman = trackTB(null,
+            "Нэпман",
+            "АукцЫон",
+            "Как я стал предателем",
+            "4:14",
+            "Меня теперь не обижают\n" +
+                    "Любой чужой отныне свой\n" +
+                    "Меня не трогают, и знают\n" +
+                    "Что я плохой, плохой, плохой\n" +
+                    "Полюстрово с лапшой, живём мы хорошо\n" +
+                    "А можно и ещё, я нэпман!\n" +
+                    "Я нэпман! Я нэпман! Я нэпман\n\n" +
+                    "Теперь в милиции эстеты\n" +
+                    "Что было раньше, то прошло\n" +
+                    "Теперь на рынке пистолеты\n" +
+                    "По 9, 70 — кило\n" +
+                    "Я тоже стал эстет — хожу я на балет\n" +
+                    "Верните партбилет, я нэпман!\n" +
+                    "Я нэпман! Я нэпман! Я нэпман\n\n" +
+                    "Отныне будет хорошо\n" +
+                    "Я смена проклятого класса\n" +
+                    "И снова в моде ананасы\n" +
+                    "Последний день уже прошёл\n" +
+                    "Я раньше был плохиш! Теперь я — Кибальчиш\n" +
+                    "Зачем мне ваш Париж? Я нэпман!\n" +
+                    "Я нэпман! Я нэпман! Я нэпман\n" +
+                    "Я нэпман!\n" +
+                    "Я нэпман!\n" +
+                    "Я нэпман!\n" +
+                    "Я нэпман! Я нэпман!",
+            imageResourceIdTraitor,
+            audioResourceNapman,
+            false
+        )
+
         val imageResourceNameNautilus = sharedPref.getString("image_resource_name", "nautiluspompilius")
         val imageResourceIdNautilus = getResources().getIdentifier(imageResourceNameNautilus, "drawable", packageName)
         val artistNautlilus = artistTB(null,
@@ -530,9 +605,25 @@ class SplashActivity : AppCompatActivity() {
             imageResourceIdKino
         )
 
+        val imageResourceAuktyon = sharedPref.getString("image_resource_name", "auktyon")
+        val imageResourceIdAuktyon = getResources().getIdentifier(imageResourceAuktyon, "drawable", packageName)
+        val artistAuktyon = artistTB(null,
+            "АукцЫон",
+            "Группа \"АукцЫон\" - это российская музыкальная группа, основанная в Ленинграде (ныне Санкт-Петербург) в 1978 году. Она является одной из самых известных и влиятельных альтернативных групп в России. В её музыке смешаны различные стили, такие как рок, джаз, панк и фолк, что придает ей уникальный звук и стиль.\n" +
+                    "\n" +
+                    "Основателем и лидером группы является музыкант и композитор Леонид Фёдоров. Его экспериментальный подход к музыке, нестандартное звучание и тексты песен сделали \"АукцЫон\" узнаваемыми и популярными в российской музыкальной среде.\n" +
+                    "\n" +
+                    "Группа \"АукцЫон\" выпустила множество альбомов и синглов с момента своего основания. Их творчество часто отличается необычными мелодиями, сложными аранжировками и глубокими лирическими текстами. Они известны не только в России, но и за её пределами, благодаря своим выступлениям на различных музыкальных фестивалях и концертах по всему миру.\n" +
+                    "\n" +
+                    "Среди наиболее известных альбомов \"АукцЫона\" можно назвать \"Птица\" (1988), \"Бодун\" (1991), \"Спутник\" (1997), \"Особое мнение\" (2002), \"Бодун - Диск 2\" (2016) и многие другие.\n" +
+                    "\n" +
+                    "Группа \"АукцЫон\" продолжает активно выступать и записывать новую музыку, привлекая к себе внимание своим оригинальным и неординарным творчеством.",
+            imageResourceIdAuktyon
+        )
+
         Thread{
 //            db.getDao().deleteAll()
-              db.getDaoArtist().deleteAll()
+//            db.getDaoArtist().deleteAll()
             var count = db.getDao().getRowCount()
             if (count == 0) {
                 db.getDao().insertTrack(trackThirst)
@@ -544,12 +635,15 @@ class SplashActivity : AppCompatActivity() {
                 db.getDao().insertTrack(trackShining)
                 db.getDao().insertTrack(trackAutumn)
                 db.getDao().insertTrack(trackPie)
+                db.getDao().insertTrack(trackFragments)
+                db.getDao().insertTrack(trackNapman)
             }
             count = db.getDaoArtist().getRowCount()
             if (count == 0) {
                 db.getDaoArtist().insertArtist(artistNautlilus)
                 db.getDaoArtist().insertArtist(artistGrob)
                 db.getDaoArtist().insertArtist(artistKino)
+                db.getDaoArtist().insertArtist(artistAuktyon)
             }
         }.start()
     }
