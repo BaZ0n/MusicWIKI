@@ -23,24 +23,17 @@ import java.util.concurrent.TimeUnit
 
 class PlayerActivity : AppCompatActivity() {
     lateinit var binding: ActivityPlayerBinding
-    private lateinit var mediaPlayer: MediaPlayer
+    private var mediaPlayer: MediaPlayer? = null
     private var audioManager: AudioManager? = null
     private lateinit var audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener
     private var handler = Handler(Looper.getMainLooper())
     private var textTr: String? = ""
     private var artistName: String? = ""
     private var title: String? = ""
-
+    private var track: Int? = 0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            startForegroundService(Intent(this, MediaPlayerService::class.java).also {
-                it.putExtra("EXTRA_TYPE", "music")
-            })
-        } else {
-            startService(Intent(this, MediaPlayerService::class.java))
-        }*/
 
         mediaPlayer = MediaPlayer()
         val db = MainDB.getDB(this)
@@ -61,7 +54,7 @@ class PlayerActivity : AppCompatActivity() {
                 artistName = item.artistName
                 val imageId = item.imageLink
                 textTr = item.textTr
-                val songID = item.audioLink
+                track = item.audioLink
                 val duration = item.durationTr
 
                 binding.trackImagePlay.setImageResource(imageId)
@@ -71,29 +64,8 @@ class PlayerActivity : AppCompatActivity() {
                 binding.durationTVPlay.setText(duration)
 
 
-                mediaPlayer = MediaPlayer.create(this, songID)
-                binding.seekBarPlay.max = mediaPlayer.duration
-            }
-        }
-
-        val runnable = object : Runnable {
-            override fun run() {
-                // Проверяем, что mediaPlayer не равен null
-                mediaPlayer?.let { player ->
-                    // Устанавливаем текущую позицию SeekBar в соответствии с текущим временем аудиоплеера
-                    binding.seekBarPlay.progress = player.currentPosition
-
-                    val currentPositionMs = player.currentPosition
-                    val minutes = TimeUnit.MILLISECONDS.toMinutes(currentPositionMs.toLong())
-                    val seconds = TimeUnit.MILLISECONDS.toSeconds(currentPositionMs.toLong()) -
-                            TimeUnit.MINUTES.toSeconds(minutes)
-
-                    val timeText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                    binding.nowTVPlay.setText(timeText)
-                }
-
-                // Повторный запуск этого Runnable через 1 секунду
-                handler.postDelayed(this, 1000)
+                mediaPlayer = MediaPlayer.create(this, track!!)
+                binding.seekBarPlay.max = mediaPlayer!!.duration
             }
         }
 
@@ -101,7 +73,7 @@ class PlayerActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Если пользователь переместил ползунок, обновите позицию аудиоплеера
                 if (fromUser) {
-                    mediaPlayer.seekTo(progress)
+                    mediaPlayer?.seekTo(progress)
                 }
             }
 
@@ -116,13 +88,13 @@ class PlayerActivity : AppCompatActivity() {
 
 
         binding.playPauseBTN.setOnClickListener {
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
+            if (mediaPlayer!!.isPlaying) {
+                mediaPlayer?.pause()
                 handler.removeCallbacks(runnable)
                 binding.playPauseBTN.setImageResource(R.drawable.playicon)
             }
             else {
-                mediaPlayer.start()
+                mediaPlayer?.start()
                 handler.post(runnable)
                 binding.playPauseBTN.setImageResource(R.drawable.pauseicon)
             }
@@ -134,25 +106,25 @@ class PlayerActivity : AppCompatActivity() {
             when (focusChange) {
                 AudioManager.AUDIOFOCUS_GAIN -> {
                     // Восстановить воспроизведение
-                    if (!mediaPlayer.isPlaying) {
-                        mediaPlayer.setVolume(1f, 1f)
-                        mediaPlayer.start()
+                    if (!mediaPlayer!!.isPlaying) {
+                        mediaPlayer?.setVolume(1f, 1f)
+                        mediaPlayer?.start()
                     }
                 }
                 AudioManager.AUDIOFOCUS_LOSS -> {
                     // Перестать воспроизведение и освободить ресурсы
-                    mediaPlayer.stop()
-                    mediaPlayer.release()
+                    mediaPlayer?.stop()
+                    mediaPlayer?.release()
                 }
                 AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                     // Временно остановить воспроизведение
-                    if (mediaPlayer.isPlaying) {
-                        mediaPlayer.pause()
+                    if (mediaPlayer!!.isPlaying) {
+                        mediaPlayer?.pause()
                     }
                 }
                 AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
-                    if (mediaPlayer.isPlaying) {
-                        mediaPlayer.setVolume(0.5f, 0.5f)
+                    if (mediaPlayer!!.isPlaying) {
+                        mediaPlayer?.setVolume(0.5f, 0.5f)
                     }
                 }
             }
@@ -166,7 +138,7 @@ class PlayerActivity : AppCompatActivity() {
 
         if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             // Получить аудиофокус и начать воспроизведение
-            mediaPlayer.start()
+            mediaPlayer?.start()
         }
 
         binding.backBTN.setOnClickListener {
@@ -175,19 +147,19 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         binding.repeatBTN.setOnClickListener {
-            if (mediaPlayer.isLooping() == false) {
-                mediaPlayer.setLooping(true)
+            if (mediaPlayer?.isLooping() == false) {
+                mediaPlayer?.setLooping(true)
                 binding.repeatBTN.setImageResource(R.drawable.loopicon)
             }
             else {
-                mediaPlayer.setLooping(false)
+                mediaPlayer?.setLooping(false)
                 binding.repeatBTN.setImageResource(R.drawable.singleicon)
             }
         }
 
         binding.previousBTN.setOnClickListener {
-            mediaPlayer.seekTo(0)
-            mediaPlayer.start()
+            mediaPlayer?.seekTo(0)
+            mediaPlayer?.start()
         }
 
         val longPressDurationInMillis = 500 // Длительность удержания кнопки в миллисекундах
@@ -195,7 +167,7 @@ class PlayerActivity : AppCompatActivity() {
         binding.nextBTN.setOnTouchListener { view, motionEvent ->
             when (motionEvent.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    mediaPlayer.pause()
+                    mediaPlayer?.pause()
                     Handler(Looper.getMainLooper()).postDelayed({
                         // Выполняется после заданной длительности удержания
                         mediaPlayer?.seekTo((mediaPlayer?.currentPosition ?: 0) + (longPressDurationInMillis * seekDurationFactor))
@@ -203,7 +175,7 @@ class PlayerActivity : AppCompatActivity() {
                 }
                 MotionEvent.ACTION_UP -> {
                     view.removeCallbacks(null)
-                    mediaPlayer.start()
+                    mediaPlayer?.start()
                 }
             }
             true
@@ -225,8 +197,35 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    private val runnable = object : Runnable {
+        override fun run() {
+            if (mediaPlayer != null && mediaPlayer!!.isPlaying && mediaPlayer!!.duration > 0) {
+                // Установка текущего положения SeekBar в соответствии с текущим временем аудиоплеера
+                binding.seekBarPlay.progress = mediaPlayer!!.currentPosition
+
+                val currentPositionMs = mediaPlayer!!.currentPosition
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(currentPositionMs.toLong())
+                val seconds = TimeUnit.MILLISECONDS.toSeconds(currentPositionMs.toLong()) -
+                        TimeUnit.MINUTES.toSeconds(minutes)
+
+                val timeText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                binding.nowTVPlay.setText(timeText)
+            }
+            // Повторное запуск этого Runnable через 1 секунду
+            handler.postDelayed(this, 1000)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
+            mediaPlayer?.pause()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.pause()
+        handler.removeCallbacks(runnable)
+//        mediaPlayer?.release()
     }
 }

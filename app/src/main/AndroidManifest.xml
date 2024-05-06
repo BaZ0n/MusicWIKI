@@ -22,10 +22,6 @@
             android:name=".artistActivity"
             android:exported="false" />
 
-        <service
-            android:name=".MediaPlayerService"
-            android:foregroundServiceType="mediaPlayback" />
-
         <activity
             android:name=".PlayerActivity"
             android:exported="false"
