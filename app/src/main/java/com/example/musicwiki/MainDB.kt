@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase
 @Database (entities = [trackTB::class, artistTB::class], version = 3)
 abstract class MainDB : RoomDatabase() {
     abstract fun getDao(): Dao
+    abstract fun getDaoArtist(): DaoArtist
     companion object {
         fun getDB(context: Context): MainDB{
             return Room.databaseBuilder(

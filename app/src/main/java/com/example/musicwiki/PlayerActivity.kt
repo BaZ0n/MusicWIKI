@@ -1,18 +1,22 @@
 package com.example.musicwiki
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.MotionEvent
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.asLiveData
 import com.example.musicwiki.databinding.ActivityPlayerBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
@@ -22,7 +26,13 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
     private var audioManager: AudioManager? = null
     private lateinit var audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener
+    private var handler = Handler(Looper.getMainLooper())
+    private var textTr: String? = ""
+    private var artistName: String? = ""
+    private var title: String? = ""
 
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             startForegroundService(Intent(this, MediaPlayerService::class.java).also {
@@ -47,10 +57,10 @@ class PlayerActivity : AppCompatActivity() {
         val songID = intent.getIntExtra("id", 0)
         db.getDao().idSearch(songID).asLiveData().observe(this){ list ->
             for (item in list) {
-                val title = item.trackName
-                val artistName = item.artistName
+                title = item.trackName
+                artistName = item.artistName
                 val imageId = item.imageLink
-                val textTr = item.textTr
+                textTr = item.textTr
                 val songID = item.audioLink
                 val duration = item.durationTr
 
@@ -66,20 +76,23 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        val handler = Handler(Looper.getMainLooper())
         val runnable = object : Runnable {
             override fun run() {
-                // Установка текущего положения SeekBar в соответствии с текущим временем аудиоплеера
-                binding.seekBarPlay.progress = mediaPlayer.currentPosition
+                // Проверяем, что mediaPlayer не равен null
+                mediaPlayer?.let { player ->
+                    // Устанавливаем текущую позицию SeekBar в соответствии с текущим временем аудиоплеера
+                    binding.seekBarPlay.progress = player.currentPosition
 
-                val currentPositionMs = mediaPlayer.currentPosition
-                val minutes = TimeUnit.MILLISECONDS.toMinutes(currentPositionMs.toLong())
-                val seconds = TimeUnit.MILLISECONDS.toSeconds(currentPositionMs.toLong()) -
-                        TimeUnit.MINUTES.toSeconds(minutes)
+                    val currentPositionMs = player.currentPosition
+                    val minutes = TimeUnit.MILLISECONDS.toMinutes(currentPositionMs.toLong())
+                    val seconds = TimeUnit.MILLISECONDS.toSeconds(currentPositionMs.toLong()) -
+                            TimeUnit.MINUTES.toSeconds(minutes)
 
-                val timeText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                binding.nowTVPlay.setText(timeText)
-                // Повторное запуск этого Runnable через 1 секунду
+                    val timeText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                    binding.nowTVPlay.setText(timeText)
+                }
+
+                // Повторный запуск этого Runnable через 1 секунду
                 handler.postDelayed(this, 1000)
             }
         }
@@ -157,7 +170,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         binding.backBTN.setOnClickListener {
-            mediaPlayer.release()
+            handler.removeCallbacks(runnable)
             finish()
         }
 
@@ -171,11 +184,49 @@ class PlayerActivity : AppCompatActivity() {
                 binding.repeatBTN.setImageResource(R.drawable.singleicon)
             }
         }
+
+        binding.previousBTN.setOnClickListener {
+            mediaPlayer.seekTo(0)
+            mediaPlayer.start()
+        }
+
+        val longPressDurationInMillis = 500 // Длительность удержания кнопки в миллисекундах
+        val seekDurationFactor = 5 // Множитель для определения длительности перемотки
+        binding.nextBTN.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mediaPlayer.pause()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        // Выполняется после заданной длительности удержания
+                        mediaPlayer?.seekTo((mediaPlayer?.currentPosition ?: 0) + (longPressDurationInMillis * seekDurationFactor))
+                    }, longPressDurationInMillis.toLong())
+                }
+                MotionEvent.ACTION_UP -> {
+                    view.removeCallbacks(null)
+                    mediaPlayer.start()
+                }
+            }
+            true
+        }
+
+        binding.textBTN.setOnClickListener {
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_text, null)
+            val textTV = view.findViewById<TextView>(R.id.textTextView)
+            val artistNameTV = view.findViewById<TextView>(R.id.artistNameTVBottom)
+            val songNameTV = view.findViewById<TextView>(R.id.songNameTVBottom)
+
+            textTV.setText(textTr)
+            artistNameTV.setText(artistName)
+            songNameTV.setText(title)
+
+            dialog.setContentView(view)
+            dialog.show()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // Освобождаем ресурсы MediaPlayer при завершении активности
-        mediaPlayer.release()
+        mediaPlayer.pause()
     }
 }

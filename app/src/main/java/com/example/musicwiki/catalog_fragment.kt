@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -29,9 +28,8 @@ class catalog_fragment : Fragment() {
         var isDataHandledSong = true // Флаг для отслеживания обработки данных
         var isDataHandledArtist = true
 
-        db.getDao().getAllItemArtist().asLiveData().observe(viewLifecycleOwner){ list ->
+        db.getDaoArtist().getAllItem().asLiveData().observe(viewLifecycleOwner){ list ->
             if (isDataHandledArtist) {
-                Toast.makeText(requireContext(), "Artist", Toast.LENGTH_SHORT).show()
                 for (item in list) {
                     val idArtist = item.id?.toInt()
                     val artistName = item.artistName
@@ -48,7 +46,6 @@ class catalog_fragment : Fragment() {
 
         db.getDao().getAllItem().asLiveData().observe(viewLifecycleOwner){ list ->
             if (isDataHandledSong) {
-                Toast.makeText(requireContext(), "Song", Toast.LENGTH_SHORT).show()
                 for (item in list) {
                     val idSong = item.id?.toInt()
                     val title = item.trackName
@@ -148,8 +145,8 @@ class catalog_fragment : Fragment() {
     fun createArtistView(rootView: View, context: Context, imageResId: Int, artistName: String, id: Int) {
         val density = context.resources.displayMetrics.density
         val colorWhite = ContextCompat.getColor(context, R.color.white)
-        val pxWidth = (85 * density).toInt()
-        val pxHeight = (85 * density).toInt()
+        val pxWidth = (100 * density).toInt()
+        val pxHeight = (100 * density).toInt()
 
         val newLinearLayoutArtist = LinearLayout(context)
         newLinearLayoutArtist.orientation = LinearLayout.VERTICAL
@@ -157,8 +154,22 @@ class catalog_fragment : Fragment() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        layoutParams.setMargins(0, 0, 5, 0)
+        layoutParams.setMargins(0, 0, 15, 0)
         newLinearLayoutArtist.layoutParams = layoutParams
+
+        val onClickListener = View.OnClickListener {
+            // Создание Intent для запуска SongDetailsActivity
+            val intent = Intent(context, artistActivity::class.java).apply {
+                // Передача информации о песне в Intent
+                putExtra("id", id)
+                putExtra("artistName", artistName)
+                // Здесь можно добавить дополнительные данные о песне, если нужно
+            }
+            // Запуск активности с подробной информацией о песне
+            context.startActivity(intent)
+        }
+        newLinearLayoutArtist.setOnClickListener(onClickListener) // Устанавливаем обработчик нажатия
+
 
         val imageView = ShapeableImageView(context)
         val imageLayoutParams = LinearLayout.LayoutParams(
@@ -180,7 +191,7 @@ class catalog_fragment : Fragment() {
         textView.layoutParams = textLayoutParams
         textView.gravity = Gravity.CENTER
         textView.text = artistName
-        textView.textSize = 16f
+        textView.textSize = 12f
         textView.typeface = ResourcesCompat.getFont(context, R.font.rubik_medium) // Устанавливаем шрифт
         textView.setTextColor(colorWhite)
 
