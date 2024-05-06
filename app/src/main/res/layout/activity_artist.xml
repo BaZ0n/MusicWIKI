@@ -100,7 +100,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/rubik_medium"
-                android:text="Треки"
+                android:text="Дискография"
                 android:textColor="@color/white"
                 android:textSize="28sp" />
 

@@ -162,16 +162,12 @@ class PlayerActivity : AppCompatActivity() {
             mediaPlayer?.start()
         }
 
-        val longPressDurationInMillis = 500 // Длительность удержания кнопки в миллисекундах
-        val seekDurationFactor = 5 // Множитель для определения длительности перемотки
+        val seekDurationMs = 5000 // Длительность удержания кнопки в миллисекундах
         binding.nextBTN.setOnTouchListener { view, motionEvent ->
             when (motionEvent.action) {
                 MotionEvent.ACTION_DOWN -> {
                     mediaPlayer?.pause()
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        // Выполняется после заданной длительности удержания
-                        mediaPlayer?.seekTo((mediaPlayer?.currentPosition ?: 0) + (longPressDurationInMillis * seekDurationFactor))
-                    }, longPressDurationInMillis.toLong())
+                    mediaPlayer?.seekTo((mediaPlayer?.currentPosition ?: 0) + seekDurationMs)
                 }
                 MotionEvent.ACTION_UP -> {
                     view.removeCallbacks(null)

@@ -3,13 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile_fragment">
+    tools:context=".profile_fragment"
+    android:background="@drawable/gradient_background">
 
-    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/musicWikiLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="62dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="О приложении"
+        android:textColor="@color/white"
+        android:textSize="38sp" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="heheheh"
-        android:textSize="42dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="@font/rubik_regular"
+        android:text="\tПриложение «MusicWiki» разработал студент 3-го курса Ульяновского Государственного Университета, группы МОАИС-О-21/1, Гайнуллин Рифат"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        />
+
 
 </FrameLayout>
